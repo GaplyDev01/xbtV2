@@ -1,7 +1,7 @@
 import { corsHeaders, handleOptions } from './_utils';
 
 export const config = {
-  runtime: 'edge',
+  runtime: 'edge'
 };
 
 export default async function handler(req: Request) {

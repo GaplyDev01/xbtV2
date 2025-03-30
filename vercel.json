@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "functions": {
-    "api/coingecko/**/*.ts": {
-      "runtime": "experimental-edge"
-    }
-  },
   "routes": [
+    {
+      "src": "/api/health",
+      "dest": "/api/health.ts"
+    },
     {
       "src": "/api/coingecko/global",
       "dest": "/api/coingecko/global.ts"
