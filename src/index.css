@@ -133,6 +133,16 @@
   background-color: rgba(var(--theme-accent), 0.5);
 }
 
+/* Hide scrollbar completely */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 /* Font optimization */
 .font-optimized {
   text-rendering: optimizeLegibility;

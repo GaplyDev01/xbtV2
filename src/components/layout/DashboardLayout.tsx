@@ -2,6 +2,7 @@ import React from 'react';
 // Removed unused import
 import GooeyMenu from '../GooeyMenu';
 import { useOnboarding } from '../../context/OnboardingContext';
+import ActivityBar from '../ActivityBar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -23,10 +24,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       className={`min-h-screen transition-colors duration-300 ${className}`}
       data-theme={theme}
     >
+      {/* Activity Bar - new component added at the top */}
+      <ActivityBar />
+      
       <div className="flex min-h-screen">
-        
         {/* Main content area */}
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 p-4 md:p-6 pt-14">
           {children}
         </main>
       </div>
