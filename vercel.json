@@ -1,5 +1,7 @@
 {
-  "version": 2,
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "framework": "vite",
   "routes": [
     {
       "src": "/api/stream",
@@ -33,5 +35,8 @@
       "src": "/api/coingecko/(.*)",
       "dest": "/api/coingecko/[...path].ts"
     }
-  ]
+  ],
+  "env": {
+    "COINGECKO_API_KEY": ""
+  }
 } 
