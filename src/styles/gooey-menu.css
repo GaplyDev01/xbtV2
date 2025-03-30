@@ -1,0 +1,165 @@
+.menu {
+  filter: url('#goo');
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  z-index: 50;
+  transform: translateX(-50%);
+}
+
+.menu-item,
+.menu-open-button {
+  border-radius: 100%;
+  width: 2.75rem;
+  height: 2.75rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+  transition: transform ease-out 200ms;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--theme-bg));
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  z-index: 1;
+}
+
+/* Light theme styles */
+:root .menu-open-button {
+  background: rgb(143, 210, 166); /* mint.light */
+  border: 2px solid rgb(113, 197, 143); /* mint.DEFAULT */
+  box-shadow: 0 4px 12px rgba(113, 197, 143, 0.3);
+}
+
+/* Dark theme styles */
+.dark .menu-open-button {
+  background: rgb(113, 197, 143); /* mint.DEFAULT */
+  border: 2px solid rgb(143, 210, 166); /* mint.light */
+  box-shadow: 
+    0 0 10px rgba(113, 197, 143, 0.5),
+    0 0 20px rgba(113, 197, 143, 0.3),
+    inset 0 0 15px rgba(143, 210, 166, 0.3);
+}
+
+/* Initial state for menu items (hidden) */
+.menu-item {
+  transform: scale(0.5) translate3d(0, 0, 0);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+  background: rgb(var(--theme-accent));
+}
+
+.menu-open-button {
+  z-index: 2;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-duration: 400ms;
+  transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+}
+
+.menu-open-button:hover {
+  transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+  filter: brightness(1.1);
+}
+
+.menu-open:checked + .menu-open-button {
+  transition-timing-function: linear;
+  transition-duration: 200ms;
+  transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+  filter: brightness(0.9);
+}
+
+.menu-open:checked ~ .menu-item {
+  transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
+  opacity: 1;
+  transform-origin: center;
+}
+
+/* Menu item positions when open */
+.menu-open:checked ~ .menu-item:nth-child(3) {
+  transition-duration: 180ms;
+  transform: translate3d(0, -100px, 0);
+}
+
+.menu-open:checked ~ .menu-item:nth-child(4) {
+  transition-duration: 280ms;
+  transform: translate3d(-90px, -70px, 0);
+}
+
+.menu-open:checked ~ .menu-item:nth-child(5) {
+  transition-duration: 380ms;
+  transform: translate3d(90px, -70px, 0);
+}
+
+.menu-open:checked ~ .menu-item:nth-child(6) {
+  transition-duration: 480ms;
+  transform: translate3d(-60px, -150px, 0);
+}
+
+.menu-open:checked ~ .menu-item:nth-child(7) {
+  transition-duration: 580ms;
+  transform: translate3d(60px, -150px, 0);
+}
+
+/* Hamburger menu icon */
+.hamburger {
+  width: 20px;
+  height: 2px;
+  background: rgb(var(--theme-bg));
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -1px;
+  transition: transform 200ms;
+}
+
+.hamburger-1 {
+  transform: translate3d(0, -8px, 0);
+}
+
+.hamburger-2 {
+  transform: translate3d(0, 0, 0);
+}
+
+.hamburger-3 {
+  transform: translate3d(0, 8px, 0);
+}
+
+.menu-open:checked + .menu-open-button .hamburger-1 {
+  transform: translate3d(0, 0, 0) rotate(45deg);
+}
+
+.menu-open:checked + .menu-open-button .hamburger-2 {
+  transform: translate3d(0, 0, 0) scale(0.1, 1);
+}
+
+.menu-open:checked + .menu-open-button .hamburger-3 {
+  transform: translate3d(0, 0, 0) rotate(-45deg);
+}
+
+/* Menu item hover and active effects */
+.menu-item:hover {
+  background: white;
+  color: rgb(var(--theme-accent));
+  transform: scale(1.1);
+}
+
+.menu-item.active {
+  background: white;
+  color: rgb(var(--theme-accent));
+  border: 2px solid rgb(var(--theme-accent));
+  box-shadow: 0 0 0 2px rgba(var(--theme-accent), 0.3);
+}
+
+/* SVG filter for gooey effect */
+.goo-filter {
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}

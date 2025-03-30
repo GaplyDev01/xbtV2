@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font loading optimization */
+@font-face {
+  font-family: 'Rider Condensed';
+  src: url('/fonts/RiderCondensed-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LEMON MILK Pro';
+  src: url('/fonts/LEMONMILKPro-Heavy.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Light theme */
+    --theme-bg: 255 255 255;
+    --theme-text-primary: 42 42 42;
+    --theme-text-secondary: 51 136 175;
+    --theme-accent: 0 122 255;
+    --theme-accent-dark: 0 102 235;
+    --theme-border: 229 231 235;
+  }
+
+  .dark {
+    /* Dark theme */
+    --theme-bg: 17 24 39;
+    --theme-text-primary: 255 255 255;
+    --theme-text-secondary: 156 163 175;
+    --theme-accent: 59 130 246;
+    --theme-accent-dark: 37 99 235;
+    --theme-border: 55 65 81;
+  }
+
+  .high-contrast-light {
+    /* High contrast light theme */
+    --theme-bg: 255 255 255;
+    --theme-text-primary: 0 0 0;
+    --theme-text-secondary: 55 65 81;
+    --theme-accent: 0 0 0;
+    --theme-accent-dark: 31 41 55;
+    --theme-border: 17 24 39;
+  }
+
+  .high-contrast-dark {
+    /* High contrast dark theme */
+    --theme-bg: 0 0 0;
+    --theme-text-primary: 255 255 255;
+    --theme-text-secondary: 209 213 219;
+    --theme-accent: 255 255 255;
+    --theme-accent-dark: 229 231 235;
+    --theme-border: 243 244 246;
+  }
+
+  /* Ensure base text contrast meets WCAG AA standards */
+  body {
+    @apply bg-theme-bg text-theme-text-primary antialiased;
+    font-size: 13px;
+  }
+
+  /* Improve focus visibility for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-theme-accent;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-theme-bg border border-theme-border rounded-lg shadow-lg;
+  }
+
+  .button-primary {
+    @apply bg-theme-accent hover:bg-theme-accent-dark text-theme-bg rounded-lg transition-colors;
+  }
+
+  .button-secondary {
+    @apply bg-theme-accent-dark hover:bg-theme-accent-dark/80 text-theme-text-primary rounded-lg transition-colors;
+  }
+
+  .input {
+    @apply bg-theme-bg border border-theme-border text-theme-text-primary rounded-lg focus:border-theme-accent focus:ring-1 focus:ring-theme-accent;
+  }
+}
+
+/* Adjust spacing utilities */
+.p-1 { padding: 0.15rem; }
+.p-2 { padding: 0.35rem; }
+.p-3 { padding: 0.5rem; }
+.p-4 { padding: 0.75rem; }
+.p-6 { padding: 1rem; }
+
+.m-1 { margin: 0.15rem; }
+.m-2 { margin: 0.35rem; }
+.m-3 { margin: 0.5rem; }
+.m-4 { margin: 0.75rem; }
+.m-6 { margin: 1rem; }
+
+/* Adjust gap utilities */
+.gap-1 { gap: 0.15rem; }
+.gap-2 { gap: 0.35rem; }
+.gap-3 { gap: 0.5rem; }
+.gap-4 { gap: 0.75rem; }
+.gap-6 { gap: 1rem; }
+
+/* Custom scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--theme-accent), 0.3) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--theme-accent), 0.3);
+  border-radius: 9999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--theme-accent), 0.5);
+}
+
+/* Font optimization */
+.font-optimized {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Viewport height adjustment for mobile */
+@media screen and (max-width: 768px) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+}

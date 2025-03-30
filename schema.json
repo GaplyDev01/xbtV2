@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenAnalysisReport",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "token": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the token."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Ticker symbol of the token."
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the token."
+          }
+        },
+        "required": ["id", "symbol", "name"]
+      },
+      "market_data": {
+        "type": "object",
+        "properties": {
+          "current_price": {
+            "type": "number",
+            "description": "Current trading price of the token."
+          },
+          "market_cap": {
+            "type": "number",
+            "description": "Market capitalization of the token."
+          },
+          "24h_volume": {
+            "type": "number",
+            "description": "Trading volume of the token in the last 24 hours."
+          },
+          "price_change_percentage_24h": {
+            "type": "number",
+            "description": "Price change percentage over the last 24 hours."
+          }
+        },
+        "required": ["current_price", "market_cap", "24h_volume", "price_change_percentage_24h"]
+      },
+      "technical_indicators": {
+        "type": "object",
+        "properties": {
+          "moving_averages": {
+            "type": "object",
+            "properties": {
+              "ma_50": {
+                "type": "number",
+                "description": "50-day moving average."
+              },
+              "ma_200": {
+                "type": "number",
+                "description": "200-day moving average."
+              }
+            },
+            "required": ["ma_50", "ma_200"]
+          },
+          "relative_strength_index": {
+            "type": "number",
+            "description": "Relative Strength Index value."
+          },
+          "macd": {
+            "type": "object",
+            "properties": {
+              "macd_line": {
+                "type": "number",
+                "description": "MACD line value."
+              },
+              "signal_line": {
+                "type": "number",
+                "description": "Signal line value."
+              },
+              "histogram": {
+                "type": "number",
+                "description": "MACD histogram value."
+              }
+            },
+            "required": ["macd_line", "signal_line", "histogram"]
+          }
+        },
+        "required": ["moving_averages", "relative_strength_index", "macd"]
+      },
+      "trading_signals": {
+        "type": "object",
+        "properties": {
+          "signal": {
+            "type": "string",
+            "enum": ["buy", "sell", "hold"],
+            "description": "Trading signal based on analysis."
+          },
+          "confidence": {
+            "type": "number",
+            "description": "Confidence level of the trading signal."
+          }
+        },
+        "required": ["signal", "confidence"]
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Timestamp of the analysis."
+      }
+    },
+    "required": ["token", "market_data", "technical_indicators", "trading_signals", "timestamp"]
+  }
+}
