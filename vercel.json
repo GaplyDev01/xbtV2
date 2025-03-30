@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "api/coingecko/**/*.ts": {
-      "runtime": "vercel-edge",
+      "runtime": "edge@1",
       "memory": 128
     }
   },
