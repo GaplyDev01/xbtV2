@@ -1,25 +1,20 @@
-import { corsHeaders, handleOptions } from './_utils';
+import { corsHeaders } from './_utils';
 
 export const config = {
   runtime: 'edge'
 };
 
 export default async function handler(req: Request) {
-  // Handle CORS preflight requests
-  if (req.method === 'OPTIONS') {
-    return handleOptions();
-  }
-
-  // Extract the requested path for the error message
+  // Extract the requested path for the response message
   const url = new URL(req.url);
   const path = url.pathname.replace('/api/coingecko', '');
 
-  // Return a friendly error message
+  // Return a simple response
   return new Response(
     JSON.stringify({
-      error: 'We ran out of SOL',
-      message: `The requested endpoint "${path}" is not available. Please check the API documentation.`,
-      status: 404,
+      status: 'not_found',
+      path: path,
+      message: `The endpoint "${path}" is not available in this simplified version.`,
       timestamp: new Date().toISOString(),
     }),
     {

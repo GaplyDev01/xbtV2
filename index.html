@@ -26,90 +26,9 @@
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://tradesxbt.com/">
-    
-    <!-- Inline styles for loader -->
-    <style>
-      #app-loader {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #111827;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        transition: opacity 0.3s ease-out;
-      }
-      .spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid rgba(0, 122, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: #007aff;
-        animation: spin 1s ease-in-out infinite;
-      }
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-      #error-message {
-        display: none;
-        color: #ef4444;
-        margin-top: 16px;
-        text-align: center;
-        font-family: sans-serif;
-      }
-    </style>
-    
-    <!-- Inline script to handle loading errors -->
-    <script>
-      window.addEventListener('error', function(e) {
-        console.error('Loading error:', e);
-        const errorEl = document.getElementById('error-message');
-        if (errorEl) {
-          errorEl.style.display = 'block';
-          errorEl.textContent = 'Failed to load the application. Please refresh the page or try again later.';
-        }
-      });
-      
-      // Hide loader after timeout or when app is loaded
-      setTimeout(function() {
-        const loader = document.getElementById('app-loader');
-        if (loader && loader.style.opacity !== '0') {
-          loader.style.opacity = '0';
-          setTimeout(() => {
-            loader.style.display = 'none';
-          }, 300);
-        }
-      }, 5000);
-    </script>
   </head>
   <body>
-    <!-- Loading spinner -->
-    <div id="app-loader">
-      <div>
-        <div class="spinner"></div>
-        <div id="error-message"></div>
-      </div>
-    </div>
-    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Remove loader once app is mounted -->
-    <script>
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          const loader = document.getElementById('app-loader');
-          if (loader) {
-            loader.style.opacity = '0';
-            setTimeout(() => {
-              loader.style.display = 'none';
-            }, 300);
-          }
-        }, 500);
-      });
-    </script>
   </body>
 </html>

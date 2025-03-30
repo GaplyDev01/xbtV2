@@ -1,9 +1,8 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 // Removed unused import
 import GooeyMenu from '../GooeyMenu';
 import { useOnboarding } from '../../context/OnboardingContext';
-// Lazy load ActivityBar to prevent it from blocking rendering
-const ActivityBar = React.lazy(() => import('../ActivityBar'));
+import ActivityBar from '../ActivityBar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -25,12 +24,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
       className={`min-h-screen transition-colors duration-300 ${className}`}
       data-theme={theme}
     >
-      {/* Activity Bar - lazy loaded with error boundary */}
-      <Suspense fallback={<div className="h-12 bg-gray-900"></div>}>
-        <ErrorBoundary>
-          <ActivityBar />
-        </ErrorBoundary>
-      </Suspense>
+      {/* Activity Bar - new component added at the top */}
+      <ActivityBar />
       
       <div className="flex min-h-screen">
         {/* Main content area */}
@@ -53,24 +48,5 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     </div>
   );
 };
-
-// Simple error boundary component
-class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean}> {
-  constructor(props: {children: React.ReactNode}) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <div className="h-12 bg-gray-900"></div>;
-    }
-    return this.props.children;
-  }
-}
 
 export default DashboardLayout;
