@@ -9,6 +9,7 @@ xbt/
 │   └── coingecko/                 # CoinGecko API proxy endpoints
 │       ├── _utils.ts              # Utility functions for API requests
 │       ├── global.ts              # Global market data endpoint
+│       ├── [...path].ts           # Catch-all route for undefined endpoints
 │       └── coins/                 # Coin-specific endpoints
 │           ├── markets.ts         # Markets data endpoint
 │           └── top_gainers_losers/# Top gainers and losers endpoint
@@ -30,6 +31,7 @@ The API implements a proxy to the CoinGecko API with the following endpoints:
 | `/api/coingecko/global` | `global.ts` | Retrieves global cryptocurrency market data |
 | `/api/coingecko/coins/markets` | `coins/markets.ts` | Gets market data for multiple cryptocurrencies |
 | `/api/coingecko/coins/top_gainers_losers` | `coins/top_gainers_losers/index.ts` | Provides lists of top gaining and losing cryptocurrencies |
+| `/api/coingecko/*` (catch-all) | `[...path].ts` | Handles undefined routes with a "We ran out of SOL" message |
 
 ### Implementation Details
 
@@ -39,4 +41,5 @@ All endpoints are implemented as Vercel Edge Functions for improved performance 
 - **Error Handling**: All endpoints include comprehensive error handling with appropriate status codes
 - **Parameter Forwarding**: Query parameters from the original request are forwarded to the CoinGecko API
 - **CORS Support**: All responses include proper CORS headers for cross-origin access
-- **Caching**: HTTP cache headers are set for improved performance 
+- **Caching**: HTTP cache headers are set for improved performance
+- **Catch-all Route**: A catch-all route provides friendly error messages for undefined endpoints 

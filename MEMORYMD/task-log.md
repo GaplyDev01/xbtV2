@@ -2,6 +2,34 @@
 
 ## 2024-03-30
 
+### Task: Add Catch-all Route for Undefined API Paths
+
+🟢 **Completed**
+
+#### Task Overview
+Added a catch-all route handler for any undefined CoinGecko API endpoints to provide a user-friendly error message.
+
+#### Changes Made
+- Created a catch-all route handler using Next.js catch-all route syntax (`[...path].ts`)
+- Added a friendly "We ran out of SOL" error message
+- Updated vercel.json to include the catch-all route with lower priority
+
+#### Technical Details
+- The catch-all route uses Vercel Edge Functions like the other API endpoints
+- It has the lowest priority in the routing configuration to ensure it only handles routes not covered by specific endpoints
+- Includes proper CORS support and JSON error formatting
+
+#### Next Steps
+1. Deploy the updated API to Vercel
+2. Verify that undefined routes return the correct error message
+3. Verify that existing routes still function properly
+
+#### Files Modified
+- `xbt/api/coingecko/[...path].ts` (new)
+- `xbt/vercel.json` (updated)
+
+---
+
 ### Task: Implement Vercel Edge Functions for CoinGecko API Proxy
 
 🟢 **Completed**
