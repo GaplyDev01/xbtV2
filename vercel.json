@@ -1,45 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "buildCommand": "npm install && npx vite build",
-  "outputDirectory": "dist",
-  "routes": [
-    {
-      "src": "/api/stream",
-      "dest": "/api/stream.ts"
-    },
-    {
-      "src": "/api/health",
-      "dest": "/api/health.ts"
-    },
-    {
-      "src": "/api/twitter/timeline",
-      "dest": "/api/twitter/timeline.ts"
-    },
-    {
-      "src": "/api/coingecko/global",
-      "dest": "/api/coingecko/global.ts"
-    },
-    {
-      "src": "/api/coingecko/coins/markets",
-      "dest": "/api/coingecko/coins/markets.ts"
-    },
-    {
-      "src": "/api/coingecko/coins/categories",
-      "dest": "/api/coingecko/coins/categories.ts"
-    },
-    {
-      "src": "/api/coingecko/coins/top_gainers_losers",
-      "dest": "/api/coingecko/coins/top_gainers_losers/index.ts"
-    },
-    {
-      "src": "/api/coingecko/(.*)",
-      "dest": "/api/coingecko/[...path].ts"
-    }
-  ],
-  "env": {
-    "COINGECKO_API_KEY": "",
-    "STATSIG_SERVER_API_KEY": "secret-FKd47YjBpAsyNxab8tIljQgonl28BPTWCj59TQNMFEp"
-  }
+  "buildCommand": "node ./node_modules/vite/bin/vite.js build",
+  "outputDirectory": "dist"
 } 
