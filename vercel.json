@@ -1,7 +1,14 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run vercel-build",
   "installCommand": "npm install",
   "framework": "vite",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/api/stream",
@@ -37,6 +44,7 @@
     }
   ],
   "env": {
-    "COINGECKO_API_KEY": ""
+    "COINGECKO_API_KEY": "",
+    "STATSIG_SERVER_API_KEY": "secret-FKd47YjBpAsyNxab8tIljQgonl28BPTWCj59TQNMFEp"
   }
 } 
