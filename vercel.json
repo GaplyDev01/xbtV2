@@ -2,6 +2,10 @@
   "version": 2,
   "routes": [
     {
+      "src": "/api/stream",
+      "dest": "/api/stream.ts"
+    },
+    {
       "src": "/api/health",
       "dest": "/api/health.ts"
     },

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        #output {
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 200px;
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stream Test</h1>
+    <p>This page demonstrates how to use the Edge Function streaming API to keep a connection open and stream data back to the client.</p>
+    
+    <div>
+        <button id="streamBtn">Start Stream</button>
+        <button id="timeoutBtn">Test Timeout Stream</button>
+        <button id="clearBtn">Clear Output</button>
+    </div>
+    
+    <h2>Output:</h2>
+    <div id="output"></div>
+    
+    <script>
+        const output = document.getElementById('output');
+        const streamBtn = document.getElementById('streamBtn');
+        const timeoutBtn = document.getElementById('timeoutBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        
+        function appendToOutput(message, isError = false) {
+            const timestamp = new Date().toLocaleTimeString();
+            const el = document.createElement('div');
+            if (isError) el.className = 'error';
+            el.textContent = `[${timestamp}] ${message}`;
+            output.appendChild(el);
+        }
+        
+        clearBtn.addEventListener('click', () => {
+            output.innerHTML = '';
+        });
+        
+        streamBtn.addEventListener('click', async () => {
+            await fetchStream(false);
+        });
+        
+        timeoutBtn.addEventListener('click', async () => {
+            await fetchStream(true);
+        });
+        
+        async function fetchStream(timeout) {
+            try {
+                streamBtn.disabled = true;
+                timeoutBtn.disabled = true;
+                output.innerHTML = '';
+                appendToOutput('Starting stream...');
+                
+                const response = await fetch('/api/stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: 'What is the price of Bitcoin?', timeout })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+                
+                while (true) {
+                    const { value, done } = await reader.read();
+                    
+                    if (done) {
+                        appendToOutput('Stream complete');
+                        break;
+                    }
+                    
+                    // Decode the chunk and add it to our buffer
+                    buffer += decoder.decode(value, { stream: true });
+                    
+                    // Process complete events in buffer
+                    let boundary = buffer.indexOf('\n\n');
+                    while (boundary !== -1) {
+                        const chunk = buffer.substring(0, boundary);
+                        buffer = buffer.substring(boundary + 2);
+                        
+                        // Process the chunk if it starts with "data: "
+                        if (chunk.startsWith('data: ')) {
+                            const event = JSON.parse(chunk.substring(6));
+                            
+                            switch (event.type) {
+                                case 'start':
+                                    appendToOutput('Stream started');
+                                    break;
+                                case 'update':
+                                    appendToOutput(event.content);
+                                    break;
+                                case 'price':
+                                    appendToOutput(event.content);
+                                    break;
+                                case 'complete':
+                                    appendToOutput(event.content);
+                                    break;
+                                case 'error':
+                                    appendToOutput(event.content, true);
+                                    break;
+                            }
+                        }
+                        
+                        boundary = buffer.indexOf('\n\n');
+                    }
+                }
+            } catch (error) {
+                appendToOutput(`Error: ${error.message}`, true);
+            } finally {
+                streamBtn.disabled = false;
+                timeoutBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html> 
