@@ -1,29 +1,24 @@
-import { corsHeaders, fetchCoinGeckoAPI, handleError, handleOptions } from '../_utils';
+import { fetchCoinGeckoAPI, corsHeaders, handleOptions, handleError } from '../_utils';
+import { NextRequest } from 'next/server';
 
 export const config = {
-  runtime: 'edge'
+  runtime: 'edge',
 };
 
-export default async function handler(req: Request) {
-  // Handle CORS preflight requests
+/**
+ * Handler for coin categories
+ */
+export default async function handler(req: NextRequest) {
+  // Handle CORS preflight request
   if (req.method === 'OPTIONS') {
     return handleOptions();
   }
 
-  // Only allow GET requests
-  if (req.method !== 'GET') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: {
-        ...corsHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-  }
-
   try {
+    // Fetch categories data from CoinGecko API
     const data = await fetchCoinGeckoAPI('/coins/categories');
     
+    // Return the data with CORS headers
     return new Response(JSON.stringify(data), {
       status: 200,
       headers: {
