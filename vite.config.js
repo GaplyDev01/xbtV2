@@ -7,6 +7,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     minify: 'esbuild',
-    sourcemap: false
-  }
+    sourcemap: false,
+    assetsDir: 'assets'
+  },
+  // Ensure proper base path for deployments
+  base: './'
 }); 
