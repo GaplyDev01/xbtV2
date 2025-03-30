@@ -18,6 +18,10 @@
     {
       "src": "/api/coingecko/coins/top_gainers_losers",
       "dest": "/api/coingecko/coins/top_gainers_losers/index.ts"
+    },
+    {
+      "src": "/api/coingecko/(.*)",
+      "dest": "/api/coingecko/[...path].ts"
     }
   ]
 } 
