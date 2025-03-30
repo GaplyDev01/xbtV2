@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "functions": {
+    "api/coingecko/**/*.ts": {
+      "runtime": "vercel-edge",
+      "memory": 128
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/coingecko/global",
+      "dest": "/api/coingecko/global.ts"
+    },
+    {
+      "src": "/api/coingecko/coins/markets",
+      "dest": "/api/coingecko/coins/markets.ts"
+    },
+    {
+      "src": "/api/coingecko/coins/top_gainers_losers",
+      "dest": "/api/coingecko/coins/top_gainers_losers/index.ts"
+    }
+  ]
+} 
