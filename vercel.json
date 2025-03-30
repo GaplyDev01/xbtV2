@@ -1,14 +1,9 @@
 {
-  "buildCommand": "npm run vercel-build",
-  "installCommand": "npm install",
-  "framework": "vite",
-  "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node"
-    }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
+  "buildCommand": "npm install && npx vite build",
+  "outputDirectory": "dist",
   "routes": [
     {
       "src": "/api/stream",
