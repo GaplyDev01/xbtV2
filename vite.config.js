@@ -7,9 +7,20 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     minify: 'esbuild',
-    sourcemap: false,
-    assetsDir: 'assets'
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['react-icons']
+        }
+      }
+    }
   },
-  // Ensure proper base path for deployments
-  base: './'
+  base: '/',
+  server: {
+    hmr: {
+      overlay: true
+    }
+  }
 }); 
